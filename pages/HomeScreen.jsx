@@ -1,103 +1,62 @@
-import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { useState } from "react";
+import * as React from "react";
 
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { Text, BottomNavigation } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+export const HomeScreen = ({navigation}) => {
 
-const Tab = createBottomTabNavigator();
+    const [text, setText] = useState("");
 
-export default function MyComponent() {
-  return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-      tabBar={({ navigation, state, descriptors, insets }) => (
-        <BottomNavigation.Bar
-          navigationState={state}
-          safeAreaInsets={insets}
-          onTabPress={({ route, preventDefault }) => {
-            const event = navigation.emit({
-              type: 'tabPress',
-              target: route.key,
-              canPreventDefault: true,
-            });
-
-            if (event.defaultPrevented) {
-              preventDefault();
-            } else {
-              navigation.dispatch({
-                ...CommonActions.navigate(route.name, route.params),
-                target: state.key,
-              });
-            }
-          }}
-          renderIcon={({ route, focused, color }) => {
-            const { options } = descriptors[route.key];
-            if (options.tabBarIcon) {
-              return options.tabBarIcon({ focused, color, size: 24 });
-            }
-
-            return null;
-          }}
-          getLabelText={({ route }) => {
-            const { options } = descriptors[route.key];
-            const label =
-              options.tabBarLabel !== undefined
-                ? options.tabBarLabel
-                : options.title !== undefined
-                  ? options.title
-                  : route.title;
-
-            return label;
-          }}
-        />
-      )}
-    >
-      <Tab.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{
-          tabBarLabel: 'Home',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="home" size={size} color={color} />;
-          },
-        }}
-      />
-      <Tab.Screen
-        name="Settings"
-        component={SettingsScreen}
-        options={{
-          tabBarLabel: 'Settings',
-          tabBarIcon: ({ color, size }) => {
-            return <Icon name="cog" size={size} color={color} />;
-          },
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
-
-function HomeScreen() {
-  return (
-    <View style={styles.container}>
-      <Text variant="headlineMedium">Home!</Text>
-    </View>
-  );
-}
-
-function SettingsScreen() {
-  return (
-    <View style={styles.container}>
-      <Text variant="headlineMedium">Settings!</Text>
-    </View>
-  );
-}
-
-
+    const handleInputChange = (value) => {
+      setText(value);
+    };
   
 
+
+  return (
+    <View style={styles.container}>
+        <Text
+          style={{
+            fontSize: 24,
+          }}
+        >
+          Search for a passage
+        </Text>
+        <TextInput
+          borderColor="black"
+          placeholder="Type Something!"
+          style={{
+            padding: 10,
+            fontSize: 20,
+            borderWidth: 2,
+            margin: 8,
+          }}
+          onChangeText={handleInputChange}
+          value={text}
+        />
+        <Button
+          color="#900788"
+          title="Click!"
+          onPress={() => {
+            alert("You tapped a button!");
+          }}
+          style={{}}
+          />
+          <Button
+              title="Go to Profile"
+              onPress={() => {
+                navigation.navigate('Profile', {name: 'Kourt'})
+              }}
+          />
+
+        <StatusBar style="auto" />
+      </View>
+  )
+}
+
+const Profile = ({navigation, route}) => {
+  return <Text>This is {route.params.name}'s profile</Text>
+}
 
 const styles = StyleSheet.create({
     container: {

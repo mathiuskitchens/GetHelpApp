@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 import { useState } from "react";
 import * as React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import MyComponent, { HomeScreen } from "./pages/HomeScreen";
+import { HomeScreen } from "./pages/HomeScreen";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import Profile from "./pages/Profile";
 import { AppRegistry } from "react-native";
@@ -19,7 +19,7 @@ export default function App() {
         <Stack.Navigator>
           <Stack.Screen
             name="Home"
-            component={MyComponent}
+            component={HomeScreen}
             options={{ title: "Home" }}
           />
           <Stack.Screen
